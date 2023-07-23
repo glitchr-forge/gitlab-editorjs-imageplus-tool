@@ -1,136 +1,140 @@
+# Image Tool Tune
 
-![Logo](https://i.ibb.co/0F1Pfxb/image.png)
+Tunes for the Image Tool Block [Editor.js](https://editorjs.io).
 
+## Features
 
-# Mention Tool Plugin for Editor.js
-## Demo
+- Float Image Left/Right
+- Resize : 50%, 70%, 100%
+- Manual resizing
+- Image cropping
 
-https://mention-tool-editorjs.vercel.app/
+**Notes**
 
+The Float functionnality is done in pure CSS. Works seamlessly when creating block, nevertheless, when using it along side Resize or Crop, it might be usefull sometimes to deactivate it while resizing/cropping as it will prevent the next content block from overlapping the current image block, when finished you can reactivate it.
 
 ## Installation
 
-Install with npm
+### Install via NPM
 
-```bash
-  npm install editorjs-mention-tool
+The package is not available on NPM yet.
+
+
+### Other methods
+
+#### Manual downloading and connecting
+
+1. Download the file `dist/image-tool-tune.js` to you project
+2. Include the script where you normally import other Editor Js Tools.
+3. Add new options to the EditorJS Class
+
+
+## Import in Simple HTML
+
+Include the script where you normally import other Editor Js Tools.
+
+```html
+    <!--Editor JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.27.2/dist/editorjs.umd.min.js"></script>
+    <!--Editor Tool JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
+    <!--Editor Tool Tune-->
+    <script src="./dist/image-tool-tune.js"></script>
+    [...BODY...]
+    <script>
+        //On DOM LOADED
+        document.addEventListener( 'DOMContentLoaded', function () {
+            //Get tune class
+            const ImageToolTune = window.ImageToolTune;
+            //Get tool class
+            const ImageTool = window.ImageTool;
+
+            //Init editor JS
+        } );
+    </script>
 ```
-    
-## Usage/Examples
 
+
+## Import in Node (React, Next...)
 ```javascript
-// Here Import react with useEffect
-import React, { useEffect } from 'react'
+//IMPORT EDITOR JS
+import EditorJS from '@editorjs/editorjs';
 
-// Here EditorJS with some plugins
-import { createReactEditorJS } from 'react-editor-js'
-import Header from "@editorjs/header"
-import Paragraph from '@editorjs/paragraph'
+//IMPORT IMAGE TOOL
+import ImageTool from '@editorjs/image';
 
-// Here mention module
-import MentionTool from 'editorjs-mention-tool'
-import "editorjs-mention-tool/src/styles.css"
+//IMPORT IMAGE TOOL TUNE (CHANGE PATH ACCORDING TO YOU CONFIG)
+import ImageToolTune from '../lib/image-tool-tune';
 
+```
 
-
-const CustomEditor = () => {
-
-    const editorCore = React.useRef(null)
-
-    const handleInitialize = React.useCallback((instance) => {
-        editorCore.current = instance
-    }, [])
-    
-    const ReactEditorJS = createReactEditorJS() // Initialize editor
-
-    const EDITOR_JS_TOOLS = {
-        paragraph: {
-            class: Paragraph,
-            inlineToolbar: true,
+## Load tool in editor js
+```javascript
+const editor = new EditorJS( {
+    holder: 'editorjs', //Your Editor JS Holder ID
+    tools: {
+        //LOAD THE TUNE
+        imageTune: ImageToolTune,
+        image: {
+            //APPLY THE TUNE TO THE TOOL
+            tunes: [ 'imageTune' ],
+            class: ImageTool,
         },
-        header: Header,
+    },
+    data: {}, //EditorJS Json for loading pre-saved blocks
+});
+```
+
+## Output data
+
+This Tunes returns `tunes.imageTune` with following format
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| floatLeft       | `boolean` | Image is floating to left        |
+| floatRight      | `boolean` | Image is floating to right       |
+| center         | `boolean` | Image has a margin:auto         |
+| sizeSmall      | `boolean` | Image width is 50% of its container |
+| sizeMiddle     | `boolean` | Image width is 70% of its container |
+| sizeLarge      | `boolean` | Image width is 100% of its container |
+| resize         | `boolean` | Manual resize mode activated ? |
+| resizeSize     | `integer` | Width (in px) of the resized image |
+| crop           | `boolean` | Manual cropping mode activated ? |
+| cropperFrameHeight | `integer` | Height (in px) of the image relative container |
+| cropperFrameWidth  | `integer` | Width (in px) of the image relative container |
+| cropperFrameLeft   | `integer` | Left position (in px) of the image |
+| cropperFrameTop    | `integer` | Top position (in px) of the  image |
+| cropperImageHeight | `integer` | Height (in px) of the image |
+| cropperImageWidth  | `integer` | Width (in px) of the  image |
+
+
+
+
+```json
+{
+   "tunes": { 
+    "imageTune": { 
+        "floatLeft": true, 
+        "floatRight": false, 
+        "center": false, 
+        "sizeSmall": false, 
+        "sizeMiddle": false, 
+        "sizeLarge": false, 
+        "resize": false, 
+        "resizeSize": 0, 
+        "crop": true,
+        "cropperFrameHeight": 158.16171875000003, 
+        "cropperFrameWidth": 180.2658808997665, 
+        "cropperFrameLeft": -222.4233718312208, 
+        "cropperFrameTop": -149.29999999999995, 
+        "cropperImageHeight": 638, 
+        "cropperImageWidth": 639.7024683122081 
+        }
     }
-
-    useEffect(() => {
-
-        // Here create new MentionTool with $ accessor key to use it as variable layout
-        new MentionTool({
-            holder: 'editorHolder', // This is the editor Holder ( see below )
-            accessKey: "$", // Access key ( $ or @ )
-            allUsers: [ // The array with the data you want to show when the users type $
-                {
-                    "id": "1234",
-                    "name": "Variable 1",
-                    "slug": "variable1"
-                },
-                {
-                    "id": "12345",
-                    "name": "Thing of v1",
-                    "slug": "variable1.something"
-                },
-            ],
-            baseUrl: '', 
-            searchAPIUrl: ''
-        })
-
-        // Here create new MentionTool with @ accessor key to use it as mention layout
-        new MentionTool({
-            holder: 'editorHolder', // This is the editor Holder ( see below )
-            accessKey: "@", // Access key ( $ or @ )
-            allUsers: [ // The array with the data you want to show when the users type @
-                {
-                    "id": "21029",
-                    "name": "Kyle Ockford",
-                    "avatar": "https://i.pravatar.cc/300",
-                    "slug": "kyleockford"
-                },
-                {
-                    "id": "21030",
-                    "name": "Paige Cortez",
-                    "avatar": "https://avatars.dicebear.com/api/croodles/your-custom-seed.svg",
-                    "slug": "paigecortez"
-                },
-                {
-                    "id": "21031",
-                    "name": "Nyla Warren",
-                    "slug": "nylawarren"
-                },
-                {
-                    "id": "21032",
-                    "name": "Hassan Lee",
-                    "slug": "hassanlee"
-                },
-                {
-                    "id": "21033",
-                    "name": "Domas Rivas",
-                    "avatar": "https://avatars.dicebear.com/api/pixel-art-neutral/kreudev.svg",
-                    "slug": "domasrivas"
-                },
-                {
-                    "id": "21034",
-                    "name": "Arthur Hunt",
-                    "slug": "arthurhunt"
-                },
-            ],
-            baseUrl: '', 
-            searchAPIUrl: ''
-        })
-    }, [])
-    
-    return (
-        <ReactEditorJS onInitialize={handleInitialize} tools={EDITOR_JS_TOOLS} placeholder={`Write something here...`} holder="editorHolder"> 
-            <div id="editorHolder" />
-        </ReactEditorJS>
-    )
 }
-
- // Return the CustomEditor to use by other components.                    
-                     
-export default CustomEditor
 ```
 
 
-## Screenshots
-
-![App ddd](https://i.ibb.co/yhFCVH9/image.png)
-
+### About cropping
+The cropping functionnality is implemented using Cropper.js v1.5.13. 
+All documentation available here : https://fengyuanchen.github.io/cropperjs

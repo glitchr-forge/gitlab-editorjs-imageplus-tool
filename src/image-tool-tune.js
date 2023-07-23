@@ -2,7 +2,7 @@
 // Adds Block Tunes for Image Tool (ImageTool)
 // Supports : Image Float Left, Image float right
 
-import './image-tool.css';
+import './image-tool-tune.css';
 
 import Cropper from './cropper.js';
 import './cropper.css';
