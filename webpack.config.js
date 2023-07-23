@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve( __dirname, 'dist' ),
-        filename: 'image-tool-tune.js',
+        filename: 'image.js',
         library: 'ImageToolTune',
         libraryTarget: 'var',
     },

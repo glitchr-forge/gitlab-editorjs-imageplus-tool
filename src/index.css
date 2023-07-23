@@ -1,3 +1,5 @@
+@import "cropperjs/src/css/cropper.scss";
+
 .cdx-image-tool-tune--floatLeft.ce-block__content,
 .cdx-image-tool-tune--floatRight.ce-block__content {
     min-height: 20px;

@@ -6,35 +6,21 @@
     <title>Image tool tune</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.27.2/dist/editorjs.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
-    <script src="./dist/image-tool-tune.js"></script>
-
+    <script src="./dist/image.js"></script>
 </head>
 
 <body>
 
-    <h1 style="width:100%; text-align:center;">Exemple d'utilisation d'image tool tune</h1>
+    <h1 style="width:100%; text-align:center;">Image tool tune</h1>
 
     <div id="editorjs"></div>
 
     <script>
-        console.log( window );
 
-        //On DOM LOADED
         document.addEventListener( 'DOMContentLoaded', function () {
 
-            //On récupère les données de l'éditeur
-            let editorData = { "time": 1689837286273, "blocks": [ { "id": "cH5NmEDCZn", "type": "image", "data": { "file": { "url": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&amp;resize=1200:*" }, "caption": "", "withBorder": false, "stretched": false, "withBackground": false }, "tunes": { "imageTune": { "floatLeft": true, "floatRight": false, "center": false, "sizeSmall": false, "sizeMiddle": false, "sizeLarge": false, "resize": false, "resizeSize": 0, "crop": true, "cropperFrameHeight": 128.67734374999998, "cropperFrameWidth": 261.0781543703008, "cropperFrameLeft": -257.219020112782, "cropperFrameTop": -204.97074257812505, "cropperImageHeight": 788.0004000000001, "cropperImageWidth": 789.9753383458648 } } }, { "id": "2IlwBv5XQY", "type": "paragraph", "data": { "text": "Hello world" } } ], "version": "2.27.2" };
-
-            //On initialise l'éditeur
-            initEditorJs( editorData );
-
-        } );
-
-        function initEditorJs( editorData ) {
             const ImageToolTune = window.ImageToolTune;
             const ImageTool = window.ImageTool;
-
 
             const editor = new EditorJS( {
                 holder: 'editorjs',
@@ -42,31 +28,11 @@
                     imageTune: ImageToolTune,
                     image: {
                         tunes: [ 'imageTune' ],
-                        class: ImageTool,
-                        config: {
-                            uploader: {
-                                /**
-                                 * Upload file to the server and return an uploaded image data
-                                 * @param {File} file - file selected from the device or pasted by drag-n-drop
-                                 * @return {Promise.<{success, file: {url}}>}
-                                 */
-                                uploadByFile( file ) {
-
-                                    return {
-                                        success: 1,
-                                        file: {
-                                            url: 'https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*',
-                                            // any other image data you want to store, such as width, height, color, extension, etc
-                                        }
-                                    };
-
-                                }
-                            }
-                        }
+                        class: ImageTool
                     },
                 },
+
                 logLevel: 'VERBOSE',
-                data: editorData,
                 onChange: ( api, event ) => {
                     saveDataEditJs();
                 }
@@ -80,10 +46,8 @@
                     console.log( 'Saving failed: ', error )
                 } );
             }
+        });
 
-
-
-        }
     </script>
 
 
