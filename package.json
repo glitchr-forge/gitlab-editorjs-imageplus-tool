@@ -1,0 +1,23 @@
+{
+  "name": "editorjs-image-tool",
+  "version": "0.1",
+  "description": "Image tool plugin for Editor.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yjs",
+    "editorjs",
+    "editor.js",
+    "plugin",
+    "tool",
+    "variables"
+  ],
+  "author": "xkzl",
+  "license": "GPL",
+  "repository": {
+    "url": "ssh://git@gitlab.glitchr.dev:public-repository/javascript/editor-js/image.git",
+    "type": "git"
+  }
+}
