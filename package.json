@@ -19,5 +19,13 @@
   "repository": {
     "url": "ssh://git@gitlab.glitchr.dev:public-repository/javascript/editor-js/image.git",
     "type": "git"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "cropperjs": "1.5.13"
   }
 }
