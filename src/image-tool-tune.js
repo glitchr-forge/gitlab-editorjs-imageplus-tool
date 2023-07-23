@@ -3,12 +3,9 @@
 // Supports : Image Float Left, Image float right
 
 import './image-tool-tune.css';
-
-import Cropper from './cropper.js';
-import './cropper.css';
+import Cropper from 'cropperjs';
 
 export default class {
-
 
     constructor( { api, data, config, block } ) {
 
