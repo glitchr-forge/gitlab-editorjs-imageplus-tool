@@ -30,17 +30,17 @@ export class ImageToolTune {
             {
                 name: 'sizeSmall',
                 icon: '<svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 6V4H20V20H12V18H8V16H4V8H8V6H12ZM14 6H18V18H14V6ZM12 8H10V16H12V8ZM8 10V14H6V10H8Z" fill="currentColor"></path></svg>',
-                label: '50%',
+                label: '25%',
                 group: 'size',
             }, {
                 name: 'sizeMiddle',
                 icon: '<svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 6V4H20V20H12V18H8V16H4V8H8V6H12ZM14 6H18V18H14V6ZM12 8H10V16H12V8ZM8 10V14H6V10H8Z" fill="currentColor"></path></svg>',
-                label: '70%',
+                label: '50%',
                 group: 'size',
             }, {
                 name: 'sizeLarge',
                 icon: '<svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 6V4H20V20H12V18H8V16H4V8H8V6H12ZM14 6H18V18H14V6ZM12 8H10V16H12V8ZM8 10V14H6V10H8Z" fill="currentColor"></path></svg>',
-                label: '100%',
+                label: '75%',
                 group: 'size',
             }, {
                 name: 'resize',
@@ -365,46 +365,41 @@ export class ImageToolTune {
      */
     crop( blockContent ) {
 
-        //this.appendCrop( blockContent );
-
-
-
         //add append crop button to image-tool__image
         //If editor is readOnly, do not add crop button
-        if ( !this.api.readOnly ) {
-            const image = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
-            const cropBtn = document.createElement( 'div' );
-            cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
-            cropBtn.innerHTML = 'Crop';
+        if ( this.api.readOnly.isEnabled ) return;
 
-            cropBtn.addEventListener( 'click', e => {
-                //remove crop button
-                image.removeChild( cropBtn );
-                this.appendCrop( blockContent );
-            }
-            );
+        const image = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+        const cropBtn = document.createElement( 'div' );
+        cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
+        cropBtn.innerHTML = 'Crop';
 
-            image.appendChild( cropBtn );
-
+        cropBtn.addEventListener( 'click', e => {
+            //remove crop button
+            image.removeChild( cropBtn );
+            this.appendCrop( blockContent );
         }
+        );
 
+        image.appendChild( cropBtn );
     }
 
 
     appendCrop( blockContent ) {
+
+        if ( this.api.readOnly.isEnabled ) return;
+
         this.uncrop( blockContent );
         const image = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ];
         blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.add( 'isCropping' );
         this.cropperInterface = new Cropper( image, {
             crop( event ) {
-                console.log( event.detail.x );
-                console.log( event.detail.y );
-                console.log( event.detail.width );
-                console.log( event.detail.height );
-                console.log( event.detail.scaleX );
-                console.log( event.detail.scaleY );
-
-
+                // console.log( event.detail.x );
+                // console.log( event.detail.y );
+                // console.log( event.detail.width );
+                // console.log( event.detail.height );
+                // console.log( event.detail.scaleX );
+                // console.log( event.detail.scaleY );
             },
         } );
 
@@ -444,6 +439,8 @@ export class ImageToolTune {
 
     applyCrop( blockContent ) {
 
+        if ( this.api.readOnly.isEnabled ) return;
+        
         //apply data to image and remove cropper interface and save button, add crop button
 
         const image = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ];
@@ -483,21 +480,20 @@ export class ImageToolTune {
 
 
         //add crop button
-        if ( !this.api.readOnly ) {
 
-            const cropBtn = document.createElement( 'div' );
-            cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
-            cropBtn.innerHTML = 'Crop';
+        const cropBtn = document.createElement( 'div' );
+        cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
+        cropBtn.innerHTML = 'Crop';
 
-            cropBtn.addEventListener( 'click', e => {
-                //remove crop button
-                blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
-                this.appendCrop( blockContent );
-            }
-            );
-
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropBtn );
+        cropBtn.addEventListener( 'click', e => {
+            //remove crop button
+            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
+            this.appendCrop( blockContent );
         }
+        );
+
+        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropBtn );
+
         blockContent.classList.remove( 'isCropping' );
 
         this.block.dispatchChange();
@@ -506,6 +502,8 @@ export class ImageToolTune {
 
 
     uncrop( blockContent ) {
+
+        if ( this.api.readOnly.isEnabled ) return;
 
         //remove crop and save button
         const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
@@ -578,50 +576,48 @@ export class ImageToolTune {
      * */
     resize( blockContent ) {
 
-        if ( !this.api.readOnly ) {
 
-            const resizable = document.createElement( 'div' );
-            resizable.classList.add( 'resizable' );
+        const resizable = document.createElement( 'div' );
+        resizable.classList.add( 'resizable' );
 
-            console.log( resizable );
-
-
-            const resizers = document.createElement( 'div' );
-            resizers.classList.add( 'resizers' );
-
-            const resizerTopLeft = document.createElement( 'div' );
-            resizerTopLeft.classList.add( 'resizer', 'top-left' );
-            resizerTopLeft.addEventListener( 'mousedown', e => {
-                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopLeft, e );
-            } );
+        // console.log( resizable );
 
 
-            const resizerTopRight = document.createElement( 'div' );
-            resizerTopRight.classList.add( 'resizer', 'top-right' );
-            resizerTopRight.addEventListener( 'mousedown', e => {
-                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopRight, e );
-            } );
+        const resizers = document.createElement( 'div' );
+        resizers.classList.add( 'resizers' );
+
+        const resizerTopLeft = document.createElement( 'div' );
+        resizerTopLeft.classList.add( 'resizer', 'top-left' );
+        resizerTopLeft.addEventListener( 'mousedown', e => {
+            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopLeft, e );
+        } );
 
 
-            const resizerBottomLeft = document.createElement( 'div' );
-            resizerBottomLeft.classList.add( 'resizer', 'bottom-left' );
-            resizerBottomLeft.addEventListener( 'mousedown', e => {
-                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomLeft, e );
-            } );
+        const resizerTopRight = document.createElement( 'div' );
+        resizerTopRight.classList.add( 'resizer', 'top-right' );
+        resizerTopRight.addEventListener( 'mousedown', e => {
+            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopRight, e );
+        } );
 
-            const resizerBottomRight = document.createElement( 'div' );
-            resizerBottomRight.classList.add( 'resizer', 'bottom-right' );
-            resizerBottomRight.addEventListener( 'mousedown', e => {
-                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomRight, e );
-            } );
 
-            resizers.appendChild( resizerTopLeft );
-            resizers.appendChild( resizerTopRight );
-            resizers.appendChild( resizerBottomLeft );
-            resizers.appendChild( resizerBottomRight );
-            resizable.appendChild( resizers );
-            blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].appendChild( resizable );
-        }
+        const resizerBottomLeft = document.createElement( 'div' );
+        resizerBottomLeft.classList.add( 'resizer', 'bottom-left' );
+        resizerBottomLeft.addEventListener( 'mousedown', e => {
+            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomLeft, e );
+        } );
+
+        const resizerBottomRight = document.createElement( 'div' );
+        resizerBottomRight.classList.add( 'resizer', 'bottom-right' );
+        resizerBottomRight.addEventListener( 'mousedown', e => {
+            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomRight, e );
+        } );
+
+        resizers.appendChild( resizerTopLeft );
+        resizers.appendChild( resizerTopRight );
+        resizers.appendChild( resizerBottomLeft );
+        resizers.appendChild( resizerBottomRight );
+        resizable.appendChild( resizers );
+        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].appendChild( resizable );
     }
 
 
@@ -894,5 +890,4 @@ export class ImageToolTune {
         this.wrapper = null;
         this.buttons = null;
     }
-
 }
