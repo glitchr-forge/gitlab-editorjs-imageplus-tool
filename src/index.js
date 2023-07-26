@@ -1,8 +1,12 @@
-import ImageTool from '@editorjs/image';
-export default ImageTool;
+
+import ImageTool from "@editorjs/image";
+export {ImageTool};
 
 import Cropper from 'cropperjs';
-export default class ImageToolTune {
+import './index.css';
+import "cropperjs/dist/cropper.css";
+
+export class ImageToolTune {
 
     constructor( { api, data, config, block } ) {
 
@@ -366,19 +370,23 @@ export default class ImageToolTune {
 
 
         //add append crop button to image-tool__image
-        const image = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
-        const cropBtn = document.createElement( 'div' );
-        cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
-        cropBtn.innerHTML = 'Crop';
+        //If editor is readOnly, do not add crop button
+        if ( !this.api.readOnly ) {
+            const image = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+            const cropBtn = document.createElement( 'div' );
+            cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
+            cropBtn.innerHTML = 'Crop';
 
-        cropBtn.addEventListener( 'click', e => {
-            //remove crop button
-            image.removeChild( cropBtn );
-            this.appendCrop( blockContent );
+            cropBtn.addEventListener( 'click', e => {
+                //remove crop button
+                image.removeChild( cropBtn );
+                this.appendCrop( blockContent );
+            }
+            );
+
+            image.appendChild( cropBtn );
+
         }
-        );
-
-        image.appendChild( cropBtn );
 
     }
 
@@ -475,20 +483,21 @@ export default class ImageToolTune {
 
 
         //add crop button
+        if ( !this.api.readOnly ) {
 
-        const cropBtn = document.createElement( 'div' );
-        cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
-        cropBtn.innerHTML = 'Crop';
+            const cropBtn = document.createElement( 'div' );
+            cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
+            cropBtn.innerHTML = 'Crop';
 
-        cropBtn.addEventListener( 'click', e => {
-            //remove crop button
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
-            this.appendCrop( blockContent );
+            cropBtn.addEventListener( 'click', e => {
+                //remove crop button
+                blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
+                this.appendCrop( blockContent );
+            }
+            );
+
+            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropBtn );
         }
-        );
-
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropBtn );
-
         blockContent.classList.remove( 'isCropping' );
 
         this.block.dispatchChange();
@@ -569,48 +578,50 @@ export default class ImageToolTune {
      * */
     resize( blockContent ) {
 
+        if ( !this.api.readOnly ) {
 
-        const resizable = document.createElement( 'div' );
-        resizable.classList.add( 'resizable' );
+            const resizable = document.createElement( 'div' );
+            resizable.classList.add( 'resizable' );
 
-        console.log( resizable );
-
-
-        const resizers = document.createElement( 'div' );
-        resizers.classList.add( 'resizers' );
-
-        const resizerTopLeft = document.createElement( 'div' );
-        resizerTopLeft.classList.add( 'resizer', 'top-left' );
-        resizerTopLeft.addEventListener( 'mousedown', e => {
-            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopLeft, e );
-        } );
+            console.log( resizable );
 
 
-        const resizerTopRight = document.createElement( 'div' );
-        resizerTopRight.classList.add( 'resizer', 'top-right' );
-        resizerTopRight.addEventListener( 'mousedown', e => {
-            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopRight, e );
-        } );
+            const resizers = document.createElement( 'div' );
+            resizers.classList.add( 'resizers' );
+
+            const resizerTopLeft = document.createElement( 'div' );
+            resizerTopLeft.classList.add( 'resizer', 'top-left' );
+            resizerTopLeft.addEventListener( 'mousedown', e => {
+                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopLeft, e );
+            } );
 
 
-        const resizerBottomLeft = document.createElement( 'div' );
-        resizerBottomLeft.classList.add( 'resizer', 'bottom-left' );
-        resizerBottomLeft.addEventListener( 'mousedown', e => {
-            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomLeft, e );
-        } );
+            const resizerTopRight = document.createElement( 'div' );
+            resizerTopRight.classList.add( 'resizer', 'top-right' );
+            resizerTopRight.addEventListener( 'mousedown', e => {
+                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerTopRight, e );
+            } );
 
-        const resizerBottomRight = document.createElement( 'div' );
-        resizerBottomRight.classList.add( 'resizer', 'bottom-right' );
-        resizerBottomRight.addEventListener( 'mousedown', e => {
-            this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomRight, e );
-        } );
 
-        resizers.appendChild( resizerTopLeft );
-        resizers.appendChild( resizerTopRight );
-        resizers.appendChild( resizerBottomLeft );
-        resizers.appendChild( resizerBottomRight );
-        resizable.appendChild( resizers );
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].appendChild( resizable );
+            const resizerBottomLeft = document.createElement( 'div' );
+            resizerBottomLeft.classList.add( 'resizer', 'bottom-left' );
+            resizerBottomLeft.addEventListener( 'mousedown', e => {
+                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomLeft, e );
+            } );
+
+            const resizerBottomRight = document.createElement( 'div' );
+            resizerBottomRight.classList.add( 'resizer', 'bottom-right' );
+            resizerBottomRight.addEventListener( 'mousedown', e => {
+                this.resizeClick( blockContent.getElementsByClassName( 'cdx-block' )[ 0 ], resizerBottomRight, e );
+            } );
+
+            resizers.appendChild( resizerTopLeft );
+            resizers.appendChild( resizerTopRight );
+            resizers.appendChild( resizerBottomLeft );
+            resizers.appendChild( resizerBottomRight );
+            resizable.appendChild( resizers );
+            blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].appendChild( resizable );
+        }
     }
 
 
@@ -883,4 +894,5 @@ export default class ImageToolTune {
         this.wrapper = null;
         this.buttons = null;
     }
+
 }

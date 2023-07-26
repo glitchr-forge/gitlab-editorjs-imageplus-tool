@@ -1,12 +1,13 @@
-@import "cropperjs/src/css/cropper.scss";
-
 .cdx-image-tool-tune--floatLeft.ce-block__content,
 .cdx-image-tool-tune--floatRight.ce-block__content {
     min-height: 20px;
-    padding-top: 20px;
-    margin-bottom: -20px;
-    margin-top: -20px;
 }
+
+.cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
+.cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image {
+    margin-top: 20px;
+}
+
 
 .cdx-image-tool-tune--center .cdx-block {
     margin: auto;
@@ -23,15 +24,15 @@
 }
 
 .cdx-image-tool-tune--sizeSmall .cdx-block {
-    max-width: 50%;
+    width: 50% !important;
 }
 
 .cdx-image-tool-tune--sizeMiddle .cdx-block {
-    max-width: 70%;
+    width: 70% !important;
 }
 
 .cdx-image-tool-tune--sizeLarge .cdx-block {
-    max-width: 100%;
+    width: 100% !important;
 }
 
 
@@ -89,7 +90,7 @@
 .cdx-image-tool-tune--crop:hover,
 .cdx-image-tool-tune--crop.isCropping,
 .cdx-image-tool-tune--resize:hover {
-    z-index: 1;
+    z-index: 2;
 }
 
 .cdx-image-tool-tune--crop .image-tool__image {
@@ -136,4 +137,13 @@
     max-width: unset !important;
     min-height: unset !important;
     max-height: unset !important;
+}
+
+.ce-block { margin: 0.8em 0; }
+.ce-toolbar { z-index:3; }
+
+.image-tool__caption { background-color:white; }
+.image-tool {
+    position: relative;
+    z-index:1;
 }
