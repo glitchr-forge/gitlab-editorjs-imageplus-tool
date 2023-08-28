@@ -57,6 +57,8 @@
     max-width: 50% !important;
 }
 
+.image-tool__image-picture { max-height:500px; }
+
 .cdx-image-tool-tune--sizeLarge img {
     max-height: 400px !important;
     object-fit:cover;
