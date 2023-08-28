@@ -348,10 +348,6 @@ export class ImageToolTune {
             blockContent.classList.remove( this.CSS.isCrop );
             this.uncrop( blockContent );
         }
-
-
-
-
     }
 
 
@@ -390,19 +386,22 @@ export class ImageToolTune {
         if ( this.api.readOnly.isEnabled ) return;
 
         this.uncrop( blockContent );
-        const image = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ];
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.add( 'isCropping' );
-        this.cropperInterface = new Cropper( image, {
-            crop( event ) {
-                // console.log( event.detail.x );
-                // console.log( event.detail.y );
-                // console.log( event.detail.width );
-                // console.log( event.detail.height );
-                // console.log( event.detail.scaleX );
-                // console.log( event.detail.scaleY );
-            },
-        } );
 
+        var element = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
+        const image = element.getElementsByTagName( 'img' )[ 0 ];
+        if(image && element) {
+            element.classList.add( 'isCropping' );
+            this.cropperInterface = new Cropper( image, {
+                crop( event ) {
+                    // console.log( event.detail.x );
+                    // console.log( event.detail.y );
+                    // console.log( event.detail.width );
+                    // console.log( event.detail.height );
+                    // console.log( event.detail.scaleX );
+                    // console.log( event.detail.scaleY );
+                },
+            } );
+        }
 
         //append save crop button
         const cropSaveBtn = document.createElement( 'div' );
@@ -412,11 +411,6 @@ export class ImageToolTune {
 
         cropSaveBtn.addEventListener( 'click', e => {
 
-            console.log( this.cropperInterface.getCropBoxData() );
-            console.log( this.cropperInterface.getImageData() );
-            console.log( this.cropperInterface.getCanvasData() );
-
-
             this.data.cropperFrameHeight = this.cropperInterface.getCropBoxData().height;
             this.data.cropperFrameWidth = this.cropperInterface.getCropBoxData().width;
             this.data.cropperFrameLeft = this.cropperInterface.getCanvasData().left - this.cropperInterface.getCropBoxData().left;
@@ -425,9 +419,7 @@ export class ImageToolTune {
             this.data.cropperImageWidth = this.cropperInterface.getImageData().width;
 
             this.applyCrop( blockContent );
-
-        }
-        );
+        });
 
         blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropSaveBtn );
 
@@ -576,12 +568,10 @@ export class ImageToolTune {
      * */
     resize( blockContent ) {
 
-
         const resizable = document.createElement( 'div' );
         resizable.classList.add( 'resizable' );
 
         // console.log( resizable );
-
 
         const resizers = document.createElement( 'div' );
         resizers.classList.add( 'resizers' );
@@ -712,7 +702,7 @@ export class ImageToolTune {
      * @return {HTMLElement}
      */
     unwrap( blockContent ) {
-        console.log( 'unwrap' );
+        
         //remove tunes from block
         this.buttons.forEach( button => {
             button.classList.remove( this.CSS.buttonActive );
