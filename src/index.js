@@ -271,9 +271,6 @@ export class ImageToolTune {
         this.apply( blockContent );
 
         this.block.dispatchChange();
-
-
-
     }
 
 
@@ -512,7 +509,8 @@ export class ImageToolTune {
 
         //remove isCropped class
 
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].classList.remove( 'isCropped' );
+        var img = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ]?.getElementsByTagName( 'img' )[ 0 ] || undefined;
+        if(img) img.classList.remove( 'isCropped' );
 
         //remove isCropping class
         blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.remove( 'isCropping' );
@@ -522,38 +520,42 @@ export class ImageToolTune {
         blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].style.maxWidth = '';
 
         //remove image width and height
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].style.width = '';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].style.height = '';
+        var imgBlockEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+        if (imgBlockEl) {
+            imgBlockEl.style.width = '';
+            imgBlockEl.style.height = '';
+        }
 
-        //remove image left and top
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.left = '';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.top = '';
+        var imgEl = imgBlockEl?.getElementsByTagName( 'img' )[ 0 ] || undefined;
+        if(imgEl) {
 
-        //remove image width and height
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.width = '';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.height = '';
+            //remove image left and top
+            imgEl.style.left = '';
+            imgEl.style.top = '';
 
+            //remove image width and height
+            imgEl.style.width = '';
+            imgEl.style.height = '';
+        }
 
 
         blockContent.classList.remove( 'isCropping' );
 
-
-
         //remove cropper interface
+        
         if ( this.cropperInterface ) {
             this.cropperInterface.destroy();
+
+            //remove crop data
+            this.data.cropperFrameHeight = 0;
+            this.data.cropperFrameWidth = 0;
+            this.data.cropperFrameLeft = 0;
+            this.data.cropperFrameTop = 0;
+            this.data.cropperImageHeight = 0;
+            this.data.cropperImageWidth = 0;
+
+            this.block.dispatchChange();
         }
-
-        //remove crop data
-        this.data.cropperFrameHeight = 0;
-        this.data.cropperFrameWidth = 0;
-        this.data.cropperFrameLeft = 0;
-        this.data.cropperFrameTop = 0;
-        this.data.cropperImageHeight = 0;
-        this.data.cropperImageWidth = 0;
-
-        this.block.dispatchChange();
-
     }
 
 
@@ -708,6 +710,8 @@ export class ImageToolTune {
             button.classList.remove( this.CSS.buttonActive );
         } );
 
+        blockContent.classList.remove( this.CSS.wrapper );
+
         //remove isFloatLeft class
         blockContent.classList.remove( this.CSS.isFloatLeft );
 
@@ -802,6 +806,7 @@ export class ImageToolTune {
             this.wrapper = this.createView();
         }
 
+        blockContent.classList.add( this.CSS.wrapper );
 
         this.apply( blockContent );
 
