@@ -271,6 +271,9 @@ export class ImageToolTune {
         this.apply( blockContent );
 
         this.block.dispatchChange();
+
+
+
     }
 
 
@@ -345,6 +348,10 @@ export class ImageToolTune {
             blockContent.classList.remove( this.CSS.isCrop );
             this.uncrop( blockContent );
         }
+
+
+
+
     }
 
 
@@ -383,22 +390,20 @@ export class ImageToolTune {
         if ( this.api.readOnly.isEnabled ) return;
 
         this.uncrop( blockContent );
+        var imageBlock = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
+        const image = imageBlock.getElementsByTagName( 'img' )[ 0 ];
+        imageBlock.classList.add( 'isCropping' );
+        this.cropperInterface = new Cropper( image, {
+            crop( event ) {
+                // console.log( event.detail.x );
+                // console.log( event.detail.y );
+                // console.log( event.detail.width );
+                // console.log( event.detail.height );
+                // console.log( event.detail.scaleX );
+                // console.log( event.detail.scaleY );
+            },
+        } );
 
-        var element = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
-        const image = element.getElementsByTagName( 'img' )[ 0 ];
-        if(image && element) {
-            element.classList.add( 'isCropping' );
-            this.cropperInterface = new Cropper( image, {
-                crop( event ) {
-                    // console.log( event.detail.x );
-                    // console.log( event.detail.y );
-                    // console.log( event.detail.width );
-                    // console.log( event.detail.height );
-                    // console.log( event.detail.scaleX );
-                    // console.log( event.detail.scaleY );
-                },
-            } );
-        }
 
         //append save crop button
         const cropSaveBtn = document.createElement( 'div' );
@@ -416,7 +421,9 @@ export class ImageToolTune {
             this.data.cropperImageWidth = this.cropperInterface.getImageData().width;
 
             this.applyCrop( blockContent );
-        });
+
+        }
+        );
 
         blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropSaveBtn );
 
@@ -495,67 +502,70 @@ export class ImageToolTune {
         if ( this.api.readOnly.isEnabled ) return;
 
         //remove crop and save button
-        const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
+        const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ] ?? undefined
         if ( cropSaveBtn ) {
             blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropSaveBtn );
         }
 
 
         //remove crop button
-        const cropBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
+        const cropBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ] ?? undefined
         if ( cropBtn ) {
             blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
         }
 
         //remove isCropped class
+        var blockEl = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ] ?? undefined
+        if (blockEl) {
+ 
+            var img = blockEl.getElementsByTagName( 'img' )[ 0 ] || undefined;
+            if (img) img.classList.remove( 'isCropped' );
 
-        var img = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ]?.getElementsByTagName( 'img' )[ 0 ] || undefined;
-        if(img) img.classList.remove( 'isCropped' );
+            //remove isCropping class
+            blockEl.classList.remove( 'isCropping' );
 
-        //remove isCropping class
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.remove( 'isCropping' );
-
-        //remove min and max width
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].style.minWidth = '';
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].style.maxWidth = '';
-
-        //remove image width and height
-        var imgBlockEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
-        if (imgBlockEl) {
-            imgBlockEl.style.width = '';
-            imgBlockEl.style.height = '';
+            //remove min and max width
+            blockEl.style.minWidth = '';
+            blockEl.style.maxWidth = '';
         }
 
-        var imgEl = imgBlockEl?.getElementsByTagName( 'img' )[ 0 ] || undefined;
-        if(imgEl) {
-
-            //remove image left and top
-            imgEl.style.left = '';
-            imgEl.style.top = '';
-
-            //remove image width and height
+        //remove image width and height
+        var imgEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ] ?? undefined;
+        if (imgEl) {
             imgEl.style.width = '';
             imgEl.style.height = '';
+
+            //remove image left and top
+            var img = imgEl.getElementsByTagName( 'img' )[ 0 ] ?? undefined;
+            if (img) {
+                img.style.left = '';
+                img.style.top = '';
+
+                //remove image width and height
+                img.style.width = '';
+                img.style.height = '';
+            }
         }
 
 
         blockContent.classList.remove( 'isCropping' );
 
+
+
         //remove cropper interface
-        
         if ( this.cropperInterface ) {
             this.cropperInterface.destroy();
-
-            //remove crop data
-            this.data.cropperFrameHeight = 0;
-            this.data.cropperFrameWidth = 0;
-            this.data.cropperFrameLeft = 0;
-            this.data.cropperFrameTop = 0;
-            this.data.cropperImageHeight = 0;
-            this.data.cropperImageWidth = 0;
-
-            this.block.dispatchChange();
         }
+
+        //remove crop data
+        this.data.cropperFrameHeight = 0;
+        this.data.cropperFrameWidth = 0;
+        this.data.cropperFrameLeft = 0;
+        this.data.cropperFrameTop = 0;
+        this.data.cropperImageHeight = 0;
+        this.data.cropperImageWidth = 0;
+
+        // this.block.dispatchChange();
     }
 
 
@@ -570,10 +580,12 @@ export class ImageToolTune {
      * */
     resize( blockContent ) {
 
+
         const resizable = document.createElement( 'div' );
         resizable.classList.add( 'resizable' );
 
         // console.log( resizable );
+
 
         const resizers = document.createElement( 'div' );
         resizers.classList.add( 'resizers' );
@@ -710,8 +722,6 @@ export class ImageToolTune {
             button.classList.remove( this.CSS.buttonActive );
         } );
 
-        blockContent.classList.remove( this.CSS.wrapper );
-
         //remove isFloatLeft class
         blockContent.classList.remove( this.CSS.isFloatLeft );
 
@@ -806,7 +816,6 @@ export class ImageToolTune {
             this.wrapper = this.createView();
         }
 
-        blockContent.classList.add( this.CSS.wrapper );
 
         this.apply( blockContent );
 
