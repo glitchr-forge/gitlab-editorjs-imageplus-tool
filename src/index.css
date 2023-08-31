@@ -39,7 +39,7 @@
 }
 
 
-.cdx-image-tool-tune--sizeSmall .image-tool__caption { max-height: 200px; }
+
 .cdx-image-tool-tune--sizeSmall img {
     max-height: 200px !important;
     object-fit:cover;
@@ -49,7 +49,6 @@
     max-width: 25% !important;
 }
 
-.cdx-image-tool-tune--sizeMiddle .image-tool__caption { max-height: 300px; }
 .cdx-image-tool-tune--sizeMiddle img {
     max-height: 300px !important;
     object-fit:cover;
@@ -57,8 +56,7 @@
 .cdx-image-tool-tune--sizeMiddle .cdx-block {
     max-width: 50% !important;
 }
- 
-.cdx-image-tool-tune--sizeLarge .image-tool__caption { max-height: 400px; }
+
 .cdx-image-tool-tune--sizeLarge img {
     max-height: 400px !important;
     object-fit:cover;
@@ -66,22 +64,6 @@
 .cdx-image-tool-tune--sizeLarge .cdx-block {
     max-width: 75% !important;
 }
-
-.cdx-image-tool-tune--sizeLarge img,
-.cdx-image-tool-tune--sizeMiddle img,
-.cdx-image-tool-tune--sizeSmall img,
-.cdx-image-tool-tune--floatLeft img,
-.cdx-image-tool-tune--floatRight img
- { max-height:500px; }
-
- .cdx-image-tool-tune--sizeLarge .image-tool__caption,
- .cdx-image-tool-tune--sizeMiddle .image-tool__caption,
- .cdx-image-tool-tune--sizeSmall .image-tool__caption,
- .cdx-image-tool-tune--floatLeft .image-tool__caption,
- .cdx-image-tool-tune--floatRight .image-tool__caption
- {
-    max-height:500px;
- }
 
 .codex-editor.read-only .cdx-input.image-tool__caption:empty,
 .read-only > .codex-editor .cdx-input.image-tool__caption:empty
@@ -157,9 +139,10 @@
 .cdx-image-tool-tune--crop .image-tool__image .crop-save {
     position: absolute;
     top: 0;
-    left: 0;
-    padding: 7px;
+    right: 0;
+    padding: 5px;
     background: #4286f4;
+    border-radius: 5px;
     color: white;
     text-align: center;
     line-height: 20px;

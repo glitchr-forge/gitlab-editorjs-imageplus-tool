@@ -390,9 +390,8 @@ export class ImageToolTune {
         if ( this.api.readOnly.isEnabled ) return;
 
         this.uncrop( blockContent );
-        var imageBlock = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
-        const image = imageBlock.getElementsByTagName( 'img' )[ 0 ];
-        imageBlock.classList.add( 'isCropping' );
+        const image = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ];
+        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.add( 'isCropping' );
         this.cropperInterface = new Cropper( image, {
             crop( event ) {
                 // console.log( event.detail.x );
@@ -412,6 +411,10 @@ export class ImageToolTune {
         cropSaveBtn.innerHTML = 'Apply';
 
         cropSaveBtn.addEventListener( 'click', e => {
+
+            // console.log( this.cropperInterface.getCropBoxData() );
+            // console.log( this.cropperInterface.getImageData() );
+            // console.log( this.cropperInterface.getCanvasData() );
 
             this.data.cropperFrameHeight = this.cropperInterface.getCropBoxData().height;
             this.data.cropperFrameWidth = this.cropperInterface.getCropBoxData().width;
@@ -501,25 +504,25 @@ export class ImageToolTune {
 
         if ( this.api.readOnly.isEnabled ) return;
 
+        var imageEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+
         //remove crop and save button
-        const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ] ?? undefined
-        if ( cropSaveBtn ) {
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropSaveBtn );
+        const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
+        if ( cropSaveBtn && imageEl) {
+            imageEl.removeChild( cropSaveBtn );
         }
 
-
         //remove crop button
-        const cropBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ] ?? undefined
-        if ( cropBtn ) {
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
+        const cropBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
+        if ( cropBtn && imageEl) {
+            imageEl.removeChild( cropBtn );
         }
 
         //remove isCropped class
-        var blockEl = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ] ?? undefined
-        if (blockEl) {
- 
-            var img = blockEl.getElementsByTagName( 'img' )[ 0 ] || undefined;
-            if (img) img.classList.remove( 'isCropped' );
+        var blockEl = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
+        if(blockEl) {
+            var image = blockEl.getElementsByTagName( 'img' )[ 0 ];
+            if (image) image.classList.remove( 'isCropped' );
 
             //remove isCropping class
             blockEl.classList.remove( 'isCropping' );
@@ -529,24 +532,24 @@ export class ImageToolTune {
             blockEl.style.maxWidth = '';
         }
 
-        //remove image width and height
-        var imgEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ] ?? undefined;
-        if (imgEl) {
-            imgEl.style.width = '';
-            imgEl.style.height = '';
+        if(imageEl) {
+
+            //remove image width and height
+            imageEl.style.width = '';
+            imageEl.style.height = '';
 
             //remove image left and top
-            var img = imgEl.getElementsByTagName( 'img' )[ 0 ] ?? undefined;
-            if (img) {
-                img.style.left = '';
-                img.style.top = '';
+            var image = imageEl.getElementsByTagName( 'img' )[ 0 ];
+            if(image) 
+            {
+                image.style.left = '';
+                image.style.top = '';
 
                 //remove image width and height
-                img.style.width = '';
-                img.style.height = '';
+                image.style.width = '';
+                image.style.height = '';
             }
         }
-
 
         blockContent.classList.remove( 'isCropping' );
 
@@ -580,12 +583,8 @@ export class ImageToolTune {
      * */
     resize( blockContent ) {
 
-
         const resizable = document.createElement( 'div' );
         resizable.classList.add( 'resizable' );
-
-        // console.log( resizable );
-
 
         const resizers = document.createElement( 'div' );
         resizers.classList.add( 'resizers' );
