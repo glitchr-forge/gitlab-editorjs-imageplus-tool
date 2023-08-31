@@ -441,31 +441,33 @@ export class ImageToolTune {
         if ( this.api.readOnly.isEnabled ) return;
         
         //apply data to image and remove cropper interface and save button, add crop button
+        var blockEl = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
+        if(blockEl) {
 
-        const image = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].getElementsByTagName( 'img' )[ 0 ];
+            blockEl.style.minWidth = this.data.cropperFrameWidth + 'px';
+            blockEl.style.maxWidth = this.data.cropperFrameWidth + 'px';
+            
+            const image = blockEl.getElementsByTagName( 'img' )[ 0 ];
+                  image.style.width = this.data.cropperImageWidth + 'px';
+                  image.style.height = this.data.cropperImageHeight + 'px';
 
+            var blockImg = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+                blockImg.style.width = this.data.cropperFrameWidth + 'px';
+                blockImg.style.height = this.data.cropperFrameHeight + 'px';
+        
+            var imageEl = blockImg.getElementsByTagName( 'img' )[ 0 ];
+            if(imageEl) {
+                imageEl.style.left = this.data.cropperFrameLeft + 'px';
+                imageEl.style.top = this.data.cropperFrameTop + 'px';
+                imageEl.classList.add( 'isCropped' );
+            }
 
+            blockEl.classList.remove( 'isCropping' );
 
-
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].style.minWidth = this.data.cropperFrameWidth + 'px';
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].style.maxWidth = this.data.cropperFrameWidth + 'px';
-
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].style.width = this.data.cropperFrameWidth + 'px';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].style.height = this.data.cropperFrameHeight + 'px';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.left = this.data.cropperFrameLeft + 'px';
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].style.top = this.data.cropperFrameTop + 'px';
-
-        image.style.width = this.data.cropperImageWidth + 'px';
-        image.style.height = this.data.cropperImageHeight + 'px';
-
-
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].getElementsByTagName( 'img' )[ 0 ].classList.add( 'isCropped' );
-        blockContent.getElementsByClassName( 'cdx-block' )[ 0 ].classList.remove( 'isCropping' );
-
-
-        const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
-        if ( cropSaveBtn ) {
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropSaveBtn );
+            const cropSaveBtn = blockContent.getElementsByClassName( 'btn-crop-action' )[ 0 ];
+            if ( cropSaveBtn ) {
+                blockImg.removeChild( cropSaveBtn );
+            }
         }
 
 
@@ -484,14 +486,18 @@ export class ImageToolTune {
         cropBtn.classList.add( 'crop-btn', 'btn-crop-action' );
         cropBtn.innerHTML = 'Crop';
 
-        cropBtn.addEventListener( 'click', e => {
-            //remove crop button
-            blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].removeChild( cropBtn );
-            this.appendCrop( blockContent );
-        }
-        );
+        var imageEl = blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ];
+        if(imageEl) {
+            
+            cropBtn.addEventListener( 'click', e => {
+                //remove crop button
+                imageEl.removeChild( cropBtn );
+                this.appendCrop( blockContent );
+            }
+            );
 
-        blockContent.getElementsByClassName( 'image-tool__image' )[ 0 ].appendChild( cropBtn );
+            imageEl.appendChild( cropBtn );
+        }
 
         blockContent.classList.remove( 'isCropping' );
 
