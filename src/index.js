@@ -435,7 +435,6 @@ export class ImageToolTune {
 
     }
 
-
     applyCrop( blockContent ) {
         
         //apply data to image and remove cropper interface and save button, add crop button
