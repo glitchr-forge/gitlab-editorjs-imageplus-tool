@@ -1,16 +1,3 @@
-.cdx-image-tool-tune--floatLeft.ce-block__content,
-.cdx-image-tool-tune--floatRight.ce-block__content { min-height: 20px; }
-
-.cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
-.cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
-.cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image  { margin-left: 20px; }
-.cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-right: 20px; }
-
-.cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input,
-.cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { width: calc(100% - 20px); }
-.cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input  { margin-left: 20px; }
-.cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { margin-right: 20px; }
-
 .cdx-image-tool-tune--floatLeft .cdx-block,
 .cdx-image-tool-tune--center .cdx-block,
 .cdx-image-tool-tune--floatRight .cdx-block,
@@ -28,22 +15,39 @@
 
 .cdx-image-tool-tune--center .cdx-block { margin: auto; }
 
-.cdx-image-tool-tune--floatLeft .cdx-block {
-    float: left;
-    margin-right: 10px;
+@media all and (min-width: 470px)                  
+{
+    .cdx-image-tool-tune--floatLeft.ce-block__content,
+    .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 20px; }
+
+    .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
+    .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
+    .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image  { margin-left: 20px; }
+    .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-right: 20px; }
+
+    .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input,
+    .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { width: calc(100% - 20px); }
+    .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input  { margin-left: 20px; }
+    .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { margin-right: 20px; }
+
+    .cdx-image-tool-tune--floatLeft .cdx-block {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .cdx-image-tool-tune--floatRight .cdx-block {
+        float: right;
+        margin-left: 10px;
+    }    
+
+    .cdx-image-tool-tune--sizeSmall .cdx-block { max-width: 25% !important; }
+    .cdx-image-tool-tune--sizeMiddle .cdx-block { max-width: 50% !important; }
+    .cdx-image-tool-tune--sizeLarge .cdx-block { max-width: 75% !important; }
 }
 
-.cdx-image-tool-tune--floatRight .cdx-block {
-    float: right;
-    margin-left: 10px;
-}
-
-.cdx-image-tool-tune--sizeSmall .cdx-block { max-width: 25% !important; }
-.cdx-image-tool-tune--sizeMiddle .cdx-block { max-width: 50% !important; }
-.cdx-image-tool-tune--sizeLarge .cdx-block { max-width: 75% !important; }
-.cdx-image-tool-tune--sizeLarge img { object-fit:cover; }
-.cdx-image-tool-tune--sizeSmall img { object-fit:cover; }
-.cdx-image-tool-tune--sizeMiddle img { object-fit:cover; }
+.cdx-image-tool-tune--sizeLarge img { object-fit:cover; max-width: 100%; }
+.cdx-image-tool-tune--sizeSmall img { object-fit:cover; max-width: 100%; }
+.cdx-image-tool-tune--sizeMiddle img { object-fit:cover; max-width: 100%; }
 
 .codex-editor.read-only .cdx-input.image-tool__caption:empty,
 .read-only > .codex-editor .cdx-input.image-tool__caption:empty
