@@ -437,8 +437,6 @@ export class ImageToolTune {
 
 
     applyCrop( blockContent ) {
-
-        if ( this.api.readOnly.isEnabled ) return;
         
         //apply data to image and remove cropper interface and save button, add crop button
         var blockEl = blockContent.getElementsByClassName( 'cdx-block' )[ 0 ];
@@ -500,7 +498,7 @@ export class ImageToolTune {
         }
 
         blockContent.classList.remove( 'isCropping' );
-
+        
         this.block.dispatchChange();
 
     }
@@ -820,7 +818,6 @@ export class ImageToolTune {
         if ( !this.wrapper ) {
             this.wrapper = this.createView();
         }
-
 
         this.apply( blockContent );
 
