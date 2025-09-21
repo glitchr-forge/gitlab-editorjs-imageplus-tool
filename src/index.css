@@ -15,6 +15,12 @@
 
 .cdx-image-tool-tune--center .cdx-block { margin: auto; }
 
+.codex-editor__redactor::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 @media all and (min-width: 470px)                  
 {
     .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content,
