@@ -25,7 +25,7 @@
 {
     .codex-editor .cdx-image-tool-tune--floatLeft.ce-block__content,
     .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 10px; margin-top:-20px }
-    .codex-editor.read-only .cdx-image-tool-tune--floatLeft.ce-block__content,
+    .codex-editor.read-only .cdx-image-tool-tune--floatLeft.ce-block__content, 
     .codex-editor.read-only .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 0px; }
     .codex-editor.read-only .image-tool--empty { display:none; }
 
