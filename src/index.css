@@ -29,11 +29,6 @@
     .read-only .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 0px; }
     .read-only .image-tool--empty { display:none; }
 
-    .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
-    .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
-    .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image  { margin-left: 20px; }
-    .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-right: 20px; }
-
     .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input,
     .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { width: calc(100% - 20px); }
     .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input  { margin-left: 20px; }
