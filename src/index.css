@@ -23,8 +23,11 @@
 
 @media all and (min-width: 470px)                  
 {
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content,
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 20px; }
+    .codex-editor .cdx-image-tool-tune--floatLeft.ce-block__content,
+    .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 20px; margin-top:-20px; }
+    .read-only .codex-editor .cdx-image-tool-tune--floatLeft.ce-block__content,
+    .read-only .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 0px; }
+    .read-only .image-tool--empty { display:none; }
 
     .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
     .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
