@@ -27,7 +27,8 @@
     .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 10px; margin-top:-20px }
     .codex-editor.read-only .cdx-image-tool-tune--floatLeft.ce-block__content, 
     .codex-editor.read-only .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 0px; }
-    .codex-editor.read-only .image-tool--empty { display:none; }
+    .codex-editor.read-only .image-tool__image-preloader { min-width:60px; min-height:60px; }
+    .codex-editor.read-only .cdx-button { display:none; }
 
     .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
     .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
