@@ -21,6 +21,15 @@
   clear: both;
 }
 
+.image-tool--caption .image-tool__caption
+{
+    margin-top:10px;
+}
+.image-tool--empty .image-tool__image-preloader { position: absolute; }
+.image-tool--empty .image-tool__image  { padding:2.5em;    }
+.image-tool--caption { padding-bottom:0 !important; }
+.image-tool--empty .image-tool__image, .image-tool--empty .image-tool__image-preloader { display:block !important; }
+
 @media all and (min-width: 470px)                  
 {
     .codex-editor .cdx-image-tool-tune--floatLeft.ce-block__content,
