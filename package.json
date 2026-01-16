@@ -1,6 +1,6 @@
 {
   "name": "editorjs-image",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Image tool plugin for Editor.js",
   "main": "src/index.js",
   "scripts": {
