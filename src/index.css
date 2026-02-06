@@ -25,7 +25,12 @@
 {
     margin-top:10px;
 }
-.image-tool--empty .image-tool__image-preloader { position: absolute; }
+.image-tool--empty .image-tool__image-preloader 
+{ 
+    position: absolute;
+    left: calc(50% - 25px);
+    top: calc(50% - 25px);
+}
 .image-tool--empty .image-tool__image  { padding:2.5em;    }
 .image-tool--caption { padding-bottom:0 !important; }
 .image-tool--empty .image-tool__image, .image-tool--empty .image-tool__image-preloader { display:block !important; }
@@ -42,10 +47,11 @@
     }
     .codex-editor.read-only .cdx-button { display:none; }
 
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image,
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-top: 40px; }
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image  { margin-left: 20px; }
-    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image { margin-right: 20px; }
+    .image-tool__image { margin-bottom: 0px; }
+    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image-picture,
+    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image-picture { margin-top: 40px; }
+    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatLeft.ce-block__content .image-tool__image-picture  { margin-left: 20px; }
+    .codex-editor:not(.read-only) .cdx-image-tool-tune--floatRight.ce-block__content .image-tool__image-picture { margin-right: 20px; }
 
     .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input,
     .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { width: calc(100% - 20px); }
@@ -86,8 +92,12 @@
     display: none;
 }
 
-.cdx-image-tool-tune--resize .cdx-block:hover .resizable {
+.codex-editor .cdx-image-tool-tune--resize .cdx-block:hover .resizable {
     display: block;
+}
+
+.codex-editor.read-only .cdx-image-tool-tune--resize .cdx-block:hover .resizable {
+    display: none !important;
 }
 
 .cdx-image-tool-tune--resize .cdx-block .resizable .resizers .resizer {
