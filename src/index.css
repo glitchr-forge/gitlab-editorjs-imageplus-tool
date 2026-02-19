@@ -34,17 +34,7 @@
 
 @media all and (min-width: 470px)                  
 {
-    .codex-editor .cdx-image-tool-tune--floatLeft.ce-block__content,
-    .codex-editor .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 10px; margin-top:-20px }
-    .codex-editor.read-only .cdx-image-tool-tune--floatLeft.ce-block__content, 
-    .codex-editor.read-only .cdx-image-tool-tune--floatRight.ce-block__content { min-height: 0px; }
-
     .codex-editor.read-only .cdx-button { display:none; }
-
-    .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input,
-    .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { width: calc(100% - 20px); }
-    .cdx-image-tool-tune--floatLeft.ce-block__content .cdx-input  { margin-left: 20px; }
-    .cdx-image-tool-tune--floatRight.ce-block__content .cdx-input { margin-right: 20px; }
 
     .cdx-image-tool-tune--floatLeft .cdx-block {
         float: left;
